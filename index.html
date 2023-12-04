@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles/style.css" rel="stylesheet" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/BFdragon.png">
+    <title>Basic Fantasy Character Creator</title>
+  </head>
+  <body>
+
+    <h1>Basic Fantasy character creator</h1>
+    <div id="wrap">    
+        <!--Tabs-->
+        <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Abilities')">1. Abilities</button>
+        <button class="tablinks" onclick="openTab(event, 'Ancestry')">2. Ancestry</button>
+        <button class="tablinks" onclick="openTab(event, 'Class'), class_render()">3. Class</button>
+        <button class="tablinks" onclick="openTab(event, 'Equipment'), armor_class_val()">4. Equipment</button>
+        <button class="tablinks" onclick="openTab(event, 'Name')">5. Name</button>
+        <button class="tablinks" onclick="openTab(event, 'Summary'), armor_class_val(), print_char()">6. Summary</button>
+        </div>
+
+        <!-- Tab content -->
+        <div id="Abilities" class="tabcontent" onchange="ability_limits()">
+            <h3>Abilities</h3>
+            <p>Write your characters ability scores here</p>
+            <button type="roll_stats" onclick="roll_stats(), ability_limits()">Roll</button><br>
+            <label for="Str">Strength:</label><br>
+            <input type='number' id='Str' min="3" max="18" value="10"/>
+            <br>
+            <label for="Int">Intelligence:</label><br>
+            <input type="number" id="Int" name="Int" min="3" max="18" value="10">
+            <br>
+            <label for="Wis">Wisdom:</label><br>
+            <input type="number" id="Wis" name="Wis" min="3" max="18" value="10">
+            <br>
+            <label for="Dex">Dexterity:</label><br>
+            <input type="number" id="Dex" name="Dex" min="3" max="18" value="10">
+            <br>
+            <label for="Con">Constitution:</label><br>
+            <input type="number" id="Con" name="Con" min="3" max="18" value="10">
+            <br>
+            <label for="Cha">Charisma:</label><br>
+            <input type="number" id="Cha" name="Cha" min="3" max="18" value="10">
+            <br>
+            <p id="CharAbilties_scores"></p>
+            </form>
+        </div>
+
+        <div id="Ancestry" class="tabcontent">
+            <h3>Ancestry</h3>
+            <p id="a"> Please select your ancestry</p>
+            <select name="ancestry" id="ancestry" >
+                <optgroup label="Core Rules">
+                <option value="none" selected disabled hidden>Select character ancestry</option> 
+                <option value="Dwarf">Dwarf</option>
+                <option value="Elf">Elf</option>
+                <option value="Halfling">Halfling</option>
+                <option value="Human">Human</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div id="Class" class="tabcontent" onchange="print_hitdice_class()">
+            <h3>Class</h3>
+            <p>Please select your class</p>
+            <label for="Level" onchange="print_hitdice_class()">Level:</label><br>
+            <input type="number" id="Level" name="Level"  min="1" max="20" value="1">
+            <br>
+            <br>
+            <label for="classes" onchange="print_hitdice_class()">Choose character class:</label>
+            <select name="classes" id="classes">
+                <optgroup label="Core Rules">
+                <option value="none" selected disabled hidden>Select character class</option> 
+                <option value="Cleric">Cleric</option>
+                <option value="Fighter">Fighter</option>
+                <option value="Magic-User">Magic-User</option>
+                <option value="Thief">Thief</option>
+                </optgroup>
+            </select>
+            <br><br>
+            <p id="Class_Hit_Dice"></p>
+            <label for="Hit_Points">Rolled Hit Points:</label>
+            <input type='number' id='Hit_Points_Amount' onchange="print_hitpoints_class()"/><br>
+            <p id="Class_Hit_Points"></p>
+        </div>
+        
+
+
+        <div id="Equipment" class="tabcontent">
+            <h3>Equipment</h3>
+            <p>Equipment is not currently supported</p>
+            <label for="Armor">Armor Worn:</label>
+            <select name="Armor" id="Armor">
+                <option value="NoArmor" selected disabled hidden>No Armor</option> 
+                <option value="NoArmor">No Armor</option>
+                <option value="LeatherArmor">Leather Armor</option>
+                <option value="ChainMail">Chain Mail</option>
+                <option value="PlateMail">Plate Mail</option>
+            </select> <br>
+            <label for="Shield">Shield:</label>
+            <input type="checkbox" onclick="Shield(),armor_class_val()"  id="Shield" />
+        </div> 
+
+        <div id="Name" class="tabcontent">
+            <h3>Character Details: </h3>
+            <label for="Char_Name">Name:</label>
+            <input type='text' id='Char_Name'/><br>
+        </div>
+
+        <div id="Summary" class="tabcontent">
+            <h2>Summary</h2>
+            <p id="CharName"></p>
+            <p id="CharAbilties"></p>
+            <p id="CharInfo"></p>
+            <p id="CharDets"></p>
+            <p id="Hit_Dice_Display"></p>
+            <p id="Combat_stats"></p>
+            <label for="Ancestry_Special_Abilities"><h4>Ancestry Special Abilities:</h4></label><br>
+            <p style="white-space: pre-wrap" id="Ancestry_Special_Abilities_List"></p>
+            <label for="Class_Special_Abilities_List"><h4>Class Special Abilities:</h4></label><br>
+            <p style="white-space: pre-wrap" id="Class_Special_Abilities_List"></p>
+            <label for="Saving_Throws"><h4>Saving Throws:</h4></label><br>
+            <p style="white-space: pre-wrap" id="Saving_Throws"></p>
+            <label for="Movement_Encumberance"><h4>Movement and Encumberance:</h4></label><br>
+            <p style="white-space: pre-wrap" id="Movement_Encumberance"></p>
+        </div>
+
+        <script src="scripts/index.js"></script>
+    </div>
+  </body>
+</html>
